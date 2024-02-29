@@ -27,7 +27,7 @@ public class AmcProxyApplication {
     }
 
 
-    @Bean
+/*    @Bean
     @ConditionalOnMissingBean
     ObservationRegistry observationRegistry() {
         PathMatcher pathMatcher = new AntPathMatcher("/");
@@ -40,7 +40,7 @@ public class AmcProxyApplication {
             }
         });
         return observationRegistry;
-    }
+    }*/
 
 
 }
