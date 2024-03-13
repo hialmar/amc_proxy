@@ -16,7 +16,21 @@ spring:
         jwt:
           issuer-uri: https://dev-nj3gclnzfe2tmzvt.us.auth0.com/
           jwk-set-uri: https://dev-nj3gclnzfe2tmzvt.us.auth0.com/.well-known/jwks.json
-
+  cloud:
+    # Configuration de l'API Gateway
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - PATCH
+              - OPTIONS
+        add-to-simple-url-handler-mapping: true
 okta:
   oauth2:
     issuer: https://dev-nj3gclnzfe2tmzvt.us.auth0.com/
