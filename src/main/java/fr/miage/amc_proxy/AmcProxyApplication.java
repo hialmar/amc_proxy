@@ -31,59 +31,19 @@ public class AmcProxyApplication {
         return new PreFilter();
     }
 
-
-
     public static void main(String[] args) {
         SpringApplication.run(AmcProxyApplication.class, args);
     }
-
-
-    /*
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        http.authorizeHttpRequests((requests) -> requests
-                        .anyRequest().authenticated()
-                )
-                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
-
-        // process CORS annotations
-        //http.cors();
-        http.csrf(AbstractHttpConfigurer::disable);
-
-        // force a non-empty response body for 401's to make the response more browser friendly
-        Okta.configureResourceServer401ResponseBody(http);
-
-        return http.build();
-    }*/
 
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/ui/**").permitAll()
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
     }
-
-
-
-/*    @Bean
-    @ConditionalOnMissingBean
-    ObservationRegistry observationRegistry() {
-        PathMatcher pathMatcher = new AntPathMatcher("/");
-        ObservationRegistry observationRegistry = ObservationRegistry.create();
-        observationRegistry.observationConfig().observationPredicate((name, context) -> {
-            if(context instanceof ServerRequestObservationContext) {
-                return !pathMatcher.match("/actuator/**", ((ServerRequestObservationContext) context).getCarrier().getRequestURI());
-            } else {
-                return true;
-            }
-        });
-        return observationRegistry;
-    }*/
-
-
 }
